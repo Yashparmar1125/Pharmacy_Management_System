@@ -55,7 +55,7 @@ This project requires the following Python packages:
    
 4. **Set up the database**:
 
-    Ensure PostgreSQL is installed and running.
+    Ensure PostgreSQL is installed and running..
     Create a database for your project(pharmacy.db).
 
 5. **Update your settings**:
