@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<div class="nk-content-inner">
+                        <div class="nk-content-body">
+                           <div class="nk-block-head nk-block-head-sm">
+                              <div class="nk-block-head-content">
+                                 <h3 class="nk-block-title page-title">Sales Report</h3>
+                                 <div class="nk-block-des text-soft">
+                                    <p>Here is the sales report of this Month.</p>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="nk-block">
+                              <div class="row g-gs">
+                                 <div class="col-xxl-6 col-md-6">
+                                    <div class="card h-100">
+                                       <div class="nk-ecwg nk-ecwg1">
+                                          <div class="card-inner">
+                                             <div class="card-title-group">
+                                                <div class="card-title">
+                                                   <h6 class="title">Total Sales</h6>
+                                                </div>
+                                                <div class="card-tools"><a href="#" class="link">View Report</a></div>
+                                             </div>
+                                             <div class="data">
+                                                <div class="amount">Rs.{{ total_sales_current_month|floatformat:2 }}</div>
+                                                <div class="info"><strong>Rs.{{ total_sales_last_month|floatformat:2 }}</strong> in last month</div>
+                                             </div>
+                                             <div class="data">
+                                                <h6 class="sub-title">This week so far</h6>
+                                                <div class="data-group">
+                                                   <div class="amount">Rs.{{ sales_this_week|floatformat:2 }}</div>
+                                                   <div class="info text-right"><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>4.63%</span><br><span>vs. last week</span></div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="nk-ck-sm">
+                                                <canvas class="line-chart" id="filledLineChart" width="686" height="225" style="display: block; box-sizing: border-box; height: 180px; width: 549px;"></canvas>
+                                             </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xxl-6 col-md-6">
+    <div class="card card-full">
+        <div class="card-inner d-flex flex-column h-100">
+            <div class="card-title-group mb-3">
+                <div class="card-title">
+                    <h6 class="title">Most Sold Medicine</h6>
+                    <p>All-time most sold medicine.</p>
+                </div>
+                <div class="card-tools mt-n1 me-n1">
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle dropdown-indicator btn btn-sm btn-outline-light btn-white" data-bs-toggle="dropdown">30 Days</a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                            <ul class="link-list-opt no-bdr">
+                                <li><a href="#"><span>7 Days</span></a></li>
+                                <li><a href="#"><span>15 Days</span></a></li>
+                                <li><a href="#"><span>30 Days</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-list gy-3">
+                <div class="progress-wrap">
+                    <div class="progress-text">
+                        <div class="progress-label">{{ most_sold_medicines.0.med_id__name }}</div>
+                        <div class="progress-amount">{{ most_sold_medicines.0.total_sales }}</div>
+                    </div>
+                    <div class="progress progress-md">
+                        <div class="progress-bar" style="width: {{ most_sold_medicines.0.total_sales|floatformat:0 }}%;"></div>
+                    </div>
+                </div>
+                <div class="progress-wrap">
+                    <div class="progress-text">
+                        <div class="progress-label">{{ most_sold_medicines.1.med_id__name }}</div>
+                        <div class="progress-amount">{{ most_sold_medicines.1.total_sales }}</div>
+                    </div>
+                    <div class="progress progress-md">
+                        <div class="progress-bar bg-warning" style="width: {{ most_sold_medicines.1.total_sales|floatformat:0 }}%;"></div>
+                    </div>
+                </div>
+                <div class="progress-wrap">
+                    <div class="progress-text">
+                        <div class="progress-label">{{ most_sold_medicines.2.med_id__name }}</div>
+                        <div class="progress-amount">{{ most_sold_medicines.2.total_sales }}</div>
+                    </div>
+                    <div class="progress progress-md">
+                        <div class="progress-bar bg-azure" style="width: {{ most_sold_medicines.2.total_sales|floatformat:0 }}%;"></div>
+                    </div>
+                </div>
+                <div class="progress-wrap">
+                    <div class="progress-text">
+                        <div class="progress-label">{{ most_sold_medicines.3.med_id__name }}</div>
+                        <div class="progress-amount">{{ most_sold_medicines.3.total_sales }}</div>
+                    </div>
+                    <div class="progress progress-md">
+                        <div class="progress-bar bg-pink" style="width: {{ most_sold_medicines.3.total_sales|floatformat:0 }}%;"></div>
+                    </div>
+                </div>
+                <div class="progress-wrap">
+                    <div class="progress-text">
+                        <div class="progress-label">{{ most_sold_medicines.4.med_id__name }}</div>
+                        <div class="progress-amount">{{ most_sold_medicines.4.total_sales }}</div>
+                    </div>
+                    <div class="progress progress-md">
+                        <div class="progress-bar bg-orange" style="width: {{ most_sold_medicines.4.total_sales|floatformat:0 }}%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                                 <div class="col-xxl-12">
+    <div class="nk-block">
+        <div class="card card-bordered card-stretch">
+            <div class="card-inner-group">
+                <div class="card-inner position-relative card-tools-toggle">
+                    <div class="card-title-group">
+                        <div class="card-tools">
+                            <div class="form-control-wrap">
+                                <div class="input-daterange date-picker-range input-group">
+                                    <input type="text" class="form-control" placeholder="Start Date" />
+                                    <div class="input-group-addon">TO</div>
+                                    <input type="text" class="form-control" placeholder="End Date" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-tools me-n1">
+                            <ul class="btn-toolbar gx-1">
+                                <li>
+                                    <a href="#" class="btn btn-icon search-toggle toggle-search" data-target="search">
+                                        <em class="icon ni ni-search"></em>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-search search-wrap" data-search="search">
+                            <div class="card-body">
+                                <div class="search-content">
+                                    <a href="#" class="search-back btn btn-icon toggle-search" data-target="search">
+                                        <em class="icon ni ni-arrow-left"></em>
+                                    </a>
+                                    <input type="text" class="form-control border-transparent form-focus-none" placeholder="Search by name">
+                                    <button class="search-submit btn btn-icon"><em class="icon ni ni-search"></em></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-inner p-0">
+                    <div class="nk-tb-list nk-tb-ulist">
+                        <div class="nk-tb-item nk-tb-head">
+                            <div class="nk-tb-col nk-tb-col-check">
+                                <div class="custom-control custom-control-sm custom-checkbox notext">
+                                    <input type="checkbox" class="custom-control-input" id="uid">
+                                    <label class="custom-control-label" for="uid"></label>
+                                </div>
+                            </div>
+                            <div class="nk-tb-col"><span>Medicine Name</span></div>
+                            <div class="nk-tb-col tb-col-md"><span class="sub-text">Total Sales Amount</span></div>
+                            <div class="nk-tb-col tb-col-lg"><span class="sub-text">Category</span></div>
+                            <div class="nk-tb-col"><span>Sales Quantity</span></div>
+                        </div>
+                        {% for medicine in medicines %}
+                        <div class="nk-tb-item">
+                            <div class="nk-tb-col nk-tb-col-check">
+                                <div class="custom-control custom-control-sm custom-checkbox notext">
+                                    <input type="checkbox" class="custom-control-input" id="uid{{ forloop.counter }}">
+                                    <label class="custom-control-label" for="uid{{ forloop.counter }}"></label>
+                                </div>
+                            </div>
+                            <div class="nk-tb-col">
+                                <a href="medicine-details.html">
+                                    <span class="tb-product"><span class="title">{{ medicine.name }}</span></span>
+                                </a>
+                            </div>
+                            <div class="nk-tb-col tb-col-md">
+                                <span class="tb-amount">{{ medicine.total_sales }} <span class="currency"></span></span>
+                            </div>
+                            <div class="nk-tb-col tb-col-lg">
+                                <span>{{ medicine.category }}</span>
+                            </div>
+                            <div class="nk-tb-col">
+                                <span>{{ medicine.sales_quantity }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="card-inner">
+                        <ul class="pagination justify-content-center justify-content-md-start">
+                            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><span class="page-link"><em class="icon ni ni-more-h"></em></span></li>
+                            <li class="page-item"><a class="page-link" href="#">6</a></li>
+                            <li class="page-item"><a class="page-link" href="#">7</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+<!-- 9322031180-->

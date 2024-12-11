@@ -1,0 +1,27 @@
+
+
+/* Sidebar with 'is-light' class */
+.nk-sidebar-main is-light {
+    background-color: #f4f4f4; /* Lighter background color when 'is-light' class is applied */
+    color: #000; /* Text color for light mode */
+}
+
+/* Sidebar toggle styles */
+body.sidebar-open .nk-sidebar {
+    width: 250px; /* Adjust as needed */
+}
+
+.nk-sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: width 0.5s ease;
+    padding-top: 60px;
+    color: #fff;
+}
+
+/* Additional styling */

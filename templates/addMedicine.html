@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="nk-content-inner">
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Add Medicine</h3>
+                    <div class="nk-block-des text-soft">
+                        <p>You can add a medicine by filling these fields.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nk-block">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                     {% include 'includes/message.html' %}
+                    <form method="POST" action="{% url 'addmedicine' %}">
+                        {% csrf_token %}
+                        <div class="row gy-4">
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="name">Medicine Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Medicine Name" required>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+        <div class="form-group">
+            <label class="form-label" for="med_id">Medicine Id</label>
+            <input type="text" class="form-control" id="med_id" name="med_id" placeholder="Medicine Id" required>
+            <span id="med_id_status" class="text-danger"></span> <!-- For displaying status -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#med_id').on('keyup', function() {
+            let medId = $(this).val();
+            if (medId.length > 0) { // Only check if there's input
+                $.ajax({
+                    url: '{% url "check_med_id" %}', // URL for the check
+                    data: {
+                        'med_id': medId
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.exists) {
+                            $('#med_id_status').text('Medicine ID already exists. Please use a different ID.')
+                                              .css('color', 'red'); // Set text color to red
+                        } else {
+                            $('#med_id_status').text('Medicine ID is available.')
+                                              .css('color', 'green'); // Set text color to green
+                        }
+                    }
+                });
+            } else {
+                $('#med_id_status').text(''); // Clear the message if input is empty
+            }
+        });
+    });
+    </script>
+
+
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="generic">Generic Name</label>
+                                    <input type="text" class="form-control" id="generic" name="gen_name" placeholder="Generic Name">
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="desc">Description</label>
+                                    <input type="text" class="form-control" id="desc" name="desc" placeholder="Description">
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="weight">Weight</label>
+                                    <input type="text" class="form-control" id="weight" name="weight" placeholder="Weight">
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                               <div class="form-group">
+                                   <label class="form-label">Category</label>
+                                   <div class="form-control-wrap">
+                                       <select class="form-select js-select2" name="category" required>
+                                           <option value="">Select</option>
+                                           {% for category in categories %}
+                                               <option>{{ category.name }}</option>
+                                           {% endfor %}
+                                       </select>
+                                   </div>
+                               </div>
+                           </div>
+
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Manufacturer</label>
+                                    <div class="form-control-wrap">
+                                        <select class="form-select js-select2" name="manufacturer" required>
+                                          <option value="">Select</option>
+                                           {% for manufacturer in manufacturer %}
+                                               <option value="{{ manufacturer.manufacturer_id }}">{{ manufacturer.name }}</option>
+                                           {% endfor %}
+                                       </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="price">Price</label>
+                                    <input type="number" class="form-control" id="price" name="price" placeholder="Price" required>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Stock (Box)</label>
+                                    <div class="form-control-wrap number-spinner-wrap">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus" data-number="minus">
+                                            <em class="icon ni ni-minus"></em>
+                                        </button>
+                                        <input type="number" class="form-control number-spinner" name="stock" value="0">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus" data-number="plus">
+                                            <em class="icon ni ni-plus"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Expire Date</label>
+                                    <div class="form-control-wrap">
+                                        <div class="form-icon form-icon-right"><em class="icon ni ni-calendar"></em></div>
+                                        <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd" name="expire_date" placeholder="yyyy-mm-dd">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Add Medicine</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

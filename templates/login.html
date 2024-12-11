@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx" class="js">
+
+   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+   <head>
+      <meta charset="utf-8">
+      <meta name="author" content="Softnio">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+      <link rel="apple-touch-icon" sizes="57x57" href="{% static 'assets/favicon/apple-icon-57x57.png' %}">
+      <link rel="apple-touch-icon" sizes="60x60" href="{% static 'assets/favicon/apple-icon-60x60.png' %}">
+      <link rel="apple-touch-icon" sizes="72x72" href="{% static 'assets/favicon/apple-icon-72x72.png' %}">
+      <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/favicon/apple-icon-76x76.png' %}">
+      <link rel="apple-touch-icon" sizes="114x114" href="{% static 'assets/favicon/apple-icon-114x114.png' %}">
+      <link rel="apple-touch-icon" sizes="120x120" href="{% static 'assets/favicon/apple-icon-120x120.png' %}">
+      <link rel="apple-touch-icon" sizes="144x144" href="{% static 'assets/favicon/apple-icon-144x144.png' %}">
+      <link rel="apple-touch-icon" sizes="152x152" href="{% static 'assets/favicon/apple-icon-152x152.png' %}">
+      <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-icon-180x180.png' %}">
+      <link rel="icon" type="image/png" sizes="192x192"  href="{% static 'assets/favicon/android-icon-192x192.png' %}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/favicon/favicon-32x32.png' %}">
+      <link rel="icon" type="image/png" sizes="96x96" href="{% static 'assets/favicon/favicon-96x96.png' %}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/favicon/favicon-16x16.png' %}">
+      <link rel="manifest" href="/manifest.json">
+      <meta name="msapplication-TileColor" content="#ffffff">
+      <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+      <meta name="theme-color" content="#ffffff">
+      <title>Login | PharmEasy</title>
+      <link rel="stylesheet" href="{% static 'assets/css/dashlitee5ca.css' %}">
+      <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/themee5ca.css' %}">
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91615293-4"></script><script>window.dataLayer = window.dataLayer || [];function gtag() {dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-91615293-4');</script>
+   </head>
+   <body class="nk-body ui-rounder npc-default pg-auth" >
+      <div class="nk-app-root">
+         <div class="nk-main ">
+            <div class="nk-wrap nk-wrap-nosidebar">
+               <div class="nk-content ">
+                  <div class="nk-block nk-block-middle nk-auth-body  wide-xs">
+                     <div class="brand-logo pb-4 text-center"><a href="../../index.html" class="logo-link"><img class="logo-light logo-img logo-img-lg" src="{% static 'assets/images/logo.png' %}" srcset="/demo7/images/logo2x.png 2x" alt="logo"><img class="logo-dark logo-img logo-img-lg" src="{% static 'assets/images/logo.png' %}" srcset="/demo7/images/logo-dark2x.png 2x" alt="logo-dark"></a></div>
+                     <div class="card card-bordered">
+                        <div class="card-inner card-inner-lg">
+                           <div class="nk-block-head">
+                              <div class="nk-block-head-content">
+                                 <h4 class="nk-block-title">Sign-In</h4>
+                                 <div class="nk-block-des">
+                                    <p>Access the PharmEasy panel using your email and password.</p>
+                                 </div>
+                              </div>
+                           </div>
+                           {% if messages %}
+                           {% for message in messages %}
+                           {% if message.tags == 'error' %}
+                         <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{message}}
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                              </button>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                           <form action="{%url 'dologin' %}" method="post">
+                              {% csrf_token %}
+                              <div class="form-group">
+                                 <div class="form-label-group"><label class="form-label" for="default-01">Email or Username</label></div>
+                                 <div class="form-control-wrap"><input type="text" class="form-control form-control-lg" id="default-01" placeholder="Enter your email address or username" name="email"></div>
+                              </div>
+                              <div class="form-group">
+                                 <div class="form-label-group"><label class="form-label" for="password">Password</label><a class="link link-primary link-sm" href="#">Forgot Code?</a></div>
+                                 <div class="form-control-wrap"><a href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password"><em class="passcode-icon icon-show icon ni ni-eye"></em><em class="passcode-icon icon-hide icon ni ni-eye-off"></em></a><input type="password" class="form-control form-control-lg" id="password" placeholder="Enter your passcode" name="password"></div>
+                              </div>
+                              <div class="form-group"><button class="btn btn-lg btn-primary btn-block">Sign in</button></div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+</html>

@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load custom_filters %}
+<div class="nk-content-inner">
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Add To Cart</h3>
+                    <div class="nk-block-des text-soft">
+                        <p>You can items To cart</p>
+                      <p> Name:{{customer.name}}</p>
+                      <p> Name:{{customer.cust_id}}</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<form method="POST" action="#">
+    {% csrf_token %}
+    <div class="nk-block">
+        <div class="card card-bordered">
+            <div class="card-inner">
+                <div class="row gy-4">
+                    <div class="col-xxl-3 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Items</label>
+                            <select id="items" name="item_id" class="form-control" required>
+                                <option value="">Select an Item</option>
+                                {% for medicine in medicines %}
+                                    <option value="{{ medicine.id }}">{{ medicine.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+        <div class="nk-block-title page-title" style="text-align: center; padding-top: 20px; padding-bottom: 5px;">
+            <h4 class="nk-block-title page-title">CART</h4>
+        </div>
+
+        <div class="nk-block">
+            <div class="card card-bordered">
+                <div class="card-inner-group">
+                    <div class="card-inner p-0">
+                        <div class="nk-tb-list">
+                            <div class="nk-tb-item nk-tb-head">
+                                <div class="nk-tb-col nk-tb-col-check">
+                                    <div class="custom-control custom-control-sm custom-notext"></div>
+                                </div>
+                                <div class="nk-tb-col tb-col-xxl"><span>Medicine ID</span></div>
+                                <div class="nk-tb-col"><span>Name</span></div>
+                                <div class="nk-tb-col tb-col-lg"><span>Weight</span></div>
+                                <div class="nk-tb-col tb-col-xxl"><span>Manufacturer</span></div>
+                                <div class="nk-tb-col"><span>Price</span></div>
+                                <div class="nk-tb-col tb-col-md"><span>Quantity</span></div>
+                                <div class="nk-tb-col tb-col-xxl"><span>Total</span></div>
+                                <div class="nk-tb-col tb-col-md"><span class="sub-text">Status</span></div>
+                            </div>
+                                          {% for medicine in prescription %}
+                                              <div class="nk-tb-item">
+                                                  <div class="nk-tb-col nk-tb-col-check">
+                                                      <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                      </div>
+                                                  </div>
+                                                  <div class="nk-tb-col">
+                                                      <a href="medicine-details.html">
+                                                          <span class="tb-product"><span class="title">{{ medicine.name }}</span></span>
+                                                      </a>
+                                                  </div>
+                                                  <div class="nk-tb-col tb-col-lg">
+                                                      <span>{{ medicine.generic_name }}</span>
+                                                  </div>
+                                                  <div class="nk-tb-col tb-col-xxl">
+                                                      <span class="tb-sub">{{ medicine.med_id }}</span>
+                                                  </div>
+                                                  <div class="nk-tb-col tb-col-lg">
+                                                      <span>{{ medicine.weight }}</span>
+                                                  </div>
+                                                  <div class="nk-tb-col tb-col-sm">
+                                                      <span>{{ medicine.category }}</span>
+                                                  </div>
+                                                  <div class="nk-tb-col tb-col-xxl">
+                                                      <span>{{ medicine.manufacturer.name }}</span>
+                                                  </div>
+                                                  <div class="nk-tb-col">
+                                                      <span class="tb-amount">Rs.{{ medicine.price }} <span class="currency"></span></span>
+                                                  </div>
+                                                 <div class="nk-tb-col tb-col-md">
+                                                          <span>{{ inventory_map|get:medicine.med_id }}</span>
+                                                      </div>
+
+                                                  <div class="nk-tb-col tb-col-md">
+                                                        {% with quantity=inventory_map|get:medicine.med_id %}
+                                                            {% if quantity == 0 %}
+                                                                <span class="tb-status text-danger">Out of Stock</span>
+                                                            {% elif quantity < 6 %}
+                                                                <span class="tb-status text-warning">Low</span>
+                                                            {% else %}
+                                                                <span class="tb-status text-success">Available</span>
+                                                            {% endif %}
+                                                        {% endwith %}
+                                                    </div>
+                                                  <div class="nk-tb-col nk-tb-col-tools">
+                                                      <ul class="nk-tb-actions gx-1 my-n1">
+                                                          <li class="me-n1">
+                                                              <div class="dropdown">
+                                                                  <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown">
+                                                                      <em class="icon ni ni-more-h"></em>
+                                                                  </a>
+                                                                  <div class="dropdown-menu dropdown-menu-end">
+                                                                      <ul class="link-list-opt no-bdr">
+                                                                          <li><a href="manufacturer.html"><em class="icon ni ni-home-fill"></em>Manufacturer</a></li>
+                                                                          <li><a href="medicine-details.html"><em class="icon ni ni-eye"></em><span>View Details</span></a></li>
+                                                                          <li><a data-bs-toggle="modal" href="#editMedicine"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
+                                                                          <li><a data-bs-toggle="modal" href="#modalDelete"><em class="icon ni ni-trash"></em><span>Remove</span></a></li>
+                                                                      </ul>
+                                                                  </div>
+                                                              </div>
+                                                          </li>
+                                                      </ul>
+                                                  </div>
+                                              </div>
+                                              {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

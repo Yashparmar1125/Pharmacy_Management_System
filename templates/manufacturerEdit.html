@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="nk-content-inner">
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Edit Manufacturer</h3>
+                    <div class="nk-block-des text-soft">
+                        <p>You can Edit a manufacturer by filling these fields.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nk-block">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <form method="post" action="{% url 'editmanufacturer' %}">
+                        {% csrf_token %}
+                        {% include 'includes/message.html' %}
+                        <div class="row gy-4">
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="comapany">Company</label>
+                                    <input type="text" class="form-control" id="comapany" name="company" placeholder="company" value="{%for i in manufacturer %}{{i.name}}{% endfor %}"required>
+                                    <input type="text" class="form-control" name="id" value="{%for i in manufacturer %}{{i.manufacturer_id}}{% endfor %}" hidden>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="email">Email</label>
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{%for i in manufacturer %}{{i.email}}{% endfor %}" required>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="phone">Phone</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="{%for i in manufacturer %}{{i.phone}}{% endfor %}" required>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="city">City</label>
+                                    <input type="text" class="form-control" id="city" name="city" placeholder="City" value="{%for i in manufacturer %}{{i.city}}{% endfor %}" required>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="state">State</label>
+                                    <input type="text" class="form-control" id="state" name="state" placeholder="State" value="{%for i in manufacturer %}{{i.state}}{% endfor %}" required>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="country">Country</label>
+                                    <input type="text" class="form-control" id="country" name="country" placeholder="Country" value="{%for i in manufacturer %}{{i.country}}{% endfor %}" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Edit Manufacturer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

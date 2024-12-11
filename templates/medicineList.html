@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<div class="nk-content-inner">
+                        <div class="nk-content-body">
+                           <div class="nk-block-head nk-block-head-sm">
+                              <div class="nk-block-between">
+                                 <div class="nk-block-head-content">
+                                    <h3 class="nk-block-title page-title">Medicine</h3>
+                                    <div class="nk-block-des text-soft">
+                                       <p>Here is the medicine list.</p>
+                                    </div>
+                                 </div>
+                                 <div class="nk-block-head-content">
+                                    <div class="toggle-wrap nk-block-tools-toggle">
+                                       <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                       <div class="toggle-expand-content" data-content="pageMenu">
+                                          <ul class="nk-block-tools g-3">
+                                              <form method="post" action="{% url 'searchmedicine' %}">
+                                                {% csrf_token %}
+                                                 <li>
+                                                    <div class="form-control-wrap">
+                                                       <div class="form-icon form-icon-right"><em class="icon ni ni-search"></em></div>
+                                                       <input type="text" class="form-control" id="default-04" name="query" placeholder="Quick search by name">
+                                                    </div>
+                                                 </li>
+                                              </form>
+                                             <li>
+                                                <div class="drodown">
+                                                   <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-bs-toggle="dropdown"><em class="d-none d-sm-inline icon ni ni-filter-alt"></em><span><span class="d-none d-md-inline"></span>Filtered By</span><em class="dd-indc icon ni ni-chevron-right"></em></a>
+                                                   <div class="dropdown-menu dropdown-menu-end">
+                                                      <ul class="link-list-opt no-bdr">
+                                                         <li><a href="{% url 'sortmedicine' 'az' %}"><span>Alphabetically, A-Z</span></a></li>
+                                                         <li><a href="{% url 'sortmedicine' 'za' %}"><span>Alphabetically, Z-A</span></a></li>
+                                                         <li><a href="#"><span>Best Selling</span></a></li>
+                                                      </ul>
+                                                   </div>
+                                                </div>
+                                             </li>
+                                             <li class="nk-block-tools-opt"><a href="{% url 'addmedicineform' %}" class="btn btn-icon btn-primary d-md-none"><em class="icon ni ni-plus"></em></a><a href="{% url 'addmedicineform' %}" class="btn btn-primary d-none d-md-inline-flex"><em class="icon ni ni-plus"></em><span>Add Medicine</span></a></li>
+                                          </ul>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                            {% include 'includes/message.html' %}
+                           <div class="nk-block">
+                              <div class="card card-bordered">
+                                 <div class="card-inner-group">
+                                    <div class="card-inner p-0">
+                                       <div class="nk-tb-list">
+                                          <div class="nk-tb-item nk-tb-head">
+                                             <div class="nk-tb-col nk-tb-col-check">
+                                                <div class="custom-control custom-control-sm custom-checkbox notext"><input type="checkbox" class="custom-control-input" id="pid"><label class="custom-control-label" for="pid"></label></div>
+                                             </div>
+                                              <div class="nk-tb-col tb-col-xxl"><span>Medicine_Id</span></div>
+                                             <div class="nk-tb-col"><span>Name</span></div>
+                                             <div class="nk-tb-col tb-col-lg"><span>Generic Name</span></div>
+                                             <div class="nk-tb-col tb-col-lg"><span>Weight</span></div>
+                                             <div class="nk-tb-col tb-col-sm"><span>Category</span></div>
+                                             <div class="nk-tb-col tb-col-xxl"><span>Manufacturer</span></div>
+                                             <div class="nk-tb-col"><span>Price</span></div>
+                                             <div class="nk-tb-col tb-col-md"><span>Stock</span></div>
+                                             <div class="nk-tb-col tb-col-xxl"><span>Expire Date</span></div>
+                                             <div class="nk-tb-col tb-col-md"><span class="sub-text">Status</span></div>
+
+                                          </div>
+                                          {% for medicine in medicines %}
+                                              <div class="nk-tb-item">
+                                                  <div class="nk-tb-col nk-tb-col-check">
+                                                      <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                          <input type="checkbox" class="custom-control-input" id="pid{{ forloop.counter }}">
+                                                          <label class="custom-control-label" for="pid{{ forloop.counter }}"></label>
+                                                      </div>
+                                                  </div>
+                                                  <div class="nk-tb-col">
+                                                      <a href="medicine-details.html">
+                                                          <span class="tb-product"><span class="title">{{ medicine.name }}</span></span>
+                                                      </a>
+                                                  </div>
+                                                  <div class="nk-tb-col tb-col-lg">
+                                                      <span>{{ medicine.generic_name }}</span>
+                                                  </div>
+                                                  <div class="nk-tb-col tb-col-xxl">
+                                                      <span class="tb-sub">{{ medicine.med_id }}</span>
+                                                  </div>
+                                                  <div class="nk-tb-col tb-col-lg">
+                                                      <span>{{ medicine.weight }}</span>
+                                                  </div>
+                                                  <div class="nk-tb-col tb-col-sm">
+                                                      <span>{{ medicine.category }}</span>
+                                                  </div>
+                                                  <div class="nk-tb-col tb-col-xxl">
+                                                      <span>{{ medicine.manufacturer.name }}</span>
+                                                  </div>
+                                                  <div class="nk-tb-col">
+                                                      <span class="tb-amount">Rs.{{ medicine.price }} <span class="currency"></span></span>
+                                                  </div>
+                                                 <div class="nk-tb-col tb-col-md">
+                                                          <span>{{ inventory_map|get:medicine.med_id }}</span>
+                                                      </div>
+
+                                                  <div class="nk-tb-col tb-col-md">
+                                                        {% with quantity=inventory_map|get:medicine.med_id %}
+                                                            {% if quantity == 0 %}
+                                                                <span class="tb-status text-danger">Out of Stock</span>
+                                                            {% elif quantity < 6 %}
+                                                                <span class="tb-status text-warning">Low</span>
+                                                            {% else %}
+                                                                <span class="tb-status text-success">Available</span>
+                                                            {% endif %}
+                                                        {% endwith %}
+                                                    </div>
+                                                  <div class="nk-tb-col nk-tb-col-tools">
+                                                      <ul class="nk-tb-actions gx-1 my-n1">
+                                                          <li class="me-n1">
+                                                              <div class="dropdown">
+                                                                  <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown">
+                                                                      <em class="icon ni ni-more-h"></em>
+                                                                  </a>
+                                                                  <div class="dropdown-menu dropdown-menu-end">
+                                                                      <ul class="link-list-opt no-bdr">
+                                                                          <li><a href="{% url 'placeorder' medicine.med_id%}"><em class="icon ni ni-home-fill"></em>Place Order</a></li>
+                                                                          <li><a href="medicine-details.html"><em class="icon ni ni-eye"></em><span>View Details</span></a></li>
+                                                                          <li><a data-bs-toggle="modal" href="#editMedicine"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
+                                                                          <li><a data-bs-toggle="modal" href="#modalDelete"><em class="icon ni ni-trash"></em><span>Remove</span></a></li>
+                                                                      </ul>
+                                                                  </div>
+                                                              </div>
+                                                          </li>
+                                                      </ul>
+                                                  </div>
+                                              </div>
+                                              {% endfor %}
+
+                                       </div>
+                                    </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="nk-add-product toggle-slide toggle-slide-right" data-content="addProduct" data-toggle-screen="any" data-toggle-overlay="true" data-toggle-body="true" data-simplebar>
+                              <div class="nk-block-head">
+                                 <div class="nk-block-head-content">
+                                    <h5 class="nk-block-title">New Product</h5>
+                                    <div class="nk-block-des">
+                                       <p>Add information and add new product.</p>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="nk-block">
+                                 <div class="row g-3">
+                                    <div class="col-12">
+                                       <div class="form-group">
+                                          <label class="form-label" for="product-title">Product Title</label>
+                                          <div class="form-control-wrap"><input type="text" class="form-control" id="product-title"></div>
+                                       </div>
+                                    </div>
+                                    <div class="col-mb-6">
+                                       <div class="form-group">
+                                          <label class="form-label" for="regular-price">Regular Price</label>
+                                          <div class="form-control-wrap"><input type="text" class="form-control" id="regular-price"></div>
+                                       </div>
+                                    </div>
+                                    <div class="col-mb-6">
+                                       <div class="form-group">
+                                          <label class="form-label" for="sale-price">Sale Price</label>
+                                          <div class="form-control-wrap"><input type="text" class="form-control" id="sale-price"></div>
+                                       </div>
+                                    </div>
+                                    <div class="col-mb-6">
+                                       <div class="form-group">
+                                          <label class="form-label" for="stock">Stock</label>
+                                          <div class="form-control-wrap"><input type="text" class="form-control" id="stock"></div>
+                                       </div>
+                                    </div>
+                                    <div class="col-mb-6">
+                                       <div class="form-group">
+                                          <label class="form-label" for="SKU">SKU</label>
+                                          <div class="form-control-wrap"><input type="text" class="form-control" id="SKU"></div>
+                                       </div>
+                                    </div>
+                                    <div class="col-12">
+                                       <div class="form-group">
+                                          <label class="form-label" for="category">Category</label>
+                                          <div class="form-control-wrap"><input type="text" class="form-control" id="category"></div>
+                                       </div>
+                                    </div>
+                                    <div class="col-12">
+                                       <div class="form-group">
+                                          <label class="form-label" for="tags">Tags</label>
+                                          <div class="form-control-wrap"><input type="text" class="form-control" id="tags"></div>
+                                       </div>
+                                    </div>
+                                    <div class="col-12">
+                                       <div class="upload-zone small bg-lighter my-2">
+                                          <div class="dz-message"><span class="dz-message-text">Drag and drop file</span></div>
+                                       </div>
+                                    </div>
+                                    <div class="col-12"><button class="btn btn-primary"><em class="icon ni ni-plus"></em><span>Add New</span></button></div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" tabindex="-1" id="modalDelete">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross"></em></a>
+               <div class="modal-body modal-body-lg text-center">
+                  <div class="nk-modal py-4">
+                     <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></em>
+                     <h4 class="nk-modal-title">Are You Sure ?</h4>
+                     <div class="nk-modal-text mt-n2">
+                        <p class="text-soft">This event data will be removed permanently.</p>
+                     </div>
+                     <ul class="d-flex justify-content-center gx-4 mt-4">
+                        <li><button data-bs-dismiss="modal" id="deleteEvent" class="btn btn-success">Yes, Deleteit</button></li>
+                        <li><button data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editEventPopup" class="btn btn-danger btn-dim">Cancel</button></li>
+                     </ul>
+                  </div>
+{% endblock %}

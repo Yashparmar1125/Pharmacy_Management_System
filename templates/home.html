@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<div class="nk-content-inner">
+                        <div class="nk-content-body">
+                           <div class="nk-block-head nk-block-head-sm">
+                              <div class="nk-block-between">
+                                 <div class="nk-block-head-content">
+                                    <h3 class="nk-block-title page-title">Dashboard</h3>
+                                    <div class="nk-block-des text-soft">
+                                       <p>Welcome to PharmEasy Dashboard.</p>
+                                    </div>
+                                 </div>
+                                 <div class="nk-block-head-content">
+                                    <div class="toggle-wrap nk-block-tools-toggle">
+                                       <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                       <div class="toggle-expand-content" data-content="pageMenu">
+                                          <ul class="nk-block-tools g-3">
+                                             <li class="nk-block-tools-opt"><a href="{% url 'sales_report' %}" class="btn btn-primary"><em class="icon ni ni-reports"></em><span>Reports</span></a></li>
+                                          </ul>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="nk-block">
+                              <div class="row g-gs">
+                                 <div class="col-xxl-3 col-sm-6">
+                                    <div class="card">
+                                       <div class="nk-ecwg nk-ecwg6">
+                                          <div class="card-inner">
+                                             <div class="card-title-group">
+                                                <div class="card-title">
+                                                   <h6 class="title">Today's Sales</h6>
+                                                </div>
+                                             </div>
+                                             <div class="data">
+                                                <div class="data-group">
+                                                   <div class="amount">Rs.{{today_sale}}</div>
+                                                   <div class="nk-ecwg6-ck">
+                                                      <canvas class="ecommerce-line-chart-s3" id="ipdIncome"></canvas>
+                                                   </div>
+                                                </div>
+                                                <div class="info"><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>4.63%</span><span> vs. last week</span></div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xxl-3 col-sm-6">
+                                    <div class="card">
+                                       <div class="nk-ecwg nk-ecwg6">
+                                          <div class="card-inner">
+                                             <div class="card-title-group">
+                                                <div class="card-title">
+                                                   <h6 class="title">Today's Revenue</h6>
+                                                </div>
+                                             </div>
+                                             <div class="data">
+                                                <div class="data-group">
+                                                   <div class="amount">Rs.{{today_revenue}}</div>
+                                                   <div class="nk-ecwg6-ck">
+                                                      <canvas class="ecommerce-line-chart-s3" id="opdIncome"></canvas>
+                                                   </div>
+                                                </div>
+                                                <div class="info"><span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>2.34%</span><span> vs. last week</span></div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xxl-3 col-sm-6">
+                                    <div class="card">
+                                       <div class="nk-ecwg nk-ecwg6">
+                                          <div class="card-inner">
+                                             <div class="card-title-group">
+                                                <div class="card-title ">
+                                                   <h6 class="title">Total Customer</h6>
+                                                </div>
+                                             </div>
+                                             <div class="data">
+                                                <div class="data-group">
+                                                   <div class="amount">{{customer_count}}</div>
+                                                   <div class="nk-ecwg6-ck">
+                                                      <canvas class="ecommerce-line-chart-s3" id="labIncome"></canvas>
+                                                   </div>
+                                                </div>
+                                                <div class="info"><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>4.63%</span><span> vs. last week</span></div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xxl-3 col-sm-6">
+                                    <div class="card">
+                                       <div class="nk-ecwg nk-ecwg6">
+                                          <div class="card-inner">
+                                             <div class="card-title-group">
+                                                <div class="card-title">
+                                                   <h6 class="title">Today's Expense</h6>
+                                                </div>
+                                             </div>
+                                             <div class="data">
+                                                <div class="data-group">
+                                                   <div class="amount">Rs.{{today_expense}}</div>
+                                                   <div class="nk-ecwg6-ck">
+                                                      <canvas class="ecommerce-line-chart-s3" id="todayExpense"></canvas>
+                                                   </div>
+                                                </div>
+                                                <div class="info"><span class="change up text-primary"><em class="icon ni ni-arrow-long-down"></em>1.34%</span><span> vs. last week</span></div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xxl-4 col-md-6">
+                                    <div class="card is-dark h-100">
+                                       <div class="nk-ecwg nk-ecwg1">
+                                          <div class="card-inner">
+                                             <div class="card-title-group">
+                                                <div class="card-title">
+                                                   <h6 class="title">Total Sales</h6>
+                                                </div>
+                                                <div class="card-tools"><a href="{% url 'sales_report' %}" class="link">View Report</a></div>
+                                             </div>
+                                             <div class="data">
+                                                <div class="amount">Rs.{{total_sale}}</div>
+                                                <div class="info"><strong>Rs.{{last_month_sale}}</strong> in last month</div>
+                                             </div>
+                                             <div class="data">
+                                                <h6 class="sub-title">This week so far</h6>
+                                                <div class="data-group">
+                                                   <div class="amount">Rs.1,338.72</div>
+                                                   <div class="info text-right"><span class="change up text-danger"><em class="icon ni ni-arrow-long-up"></em>4.63%</span><br><span>vs. last week</span></div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="nk-ecwg1-ck">
+                                             <canvas class="ecommerce-line-chart-s1" id="totalSales"></canvas>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                  <div class="col-xxl-3 col-md-6">
+                                    <div class="card h-100">
+                                       <div class="card-inner">
+                                          <div class="card-title-group mb-2">
+                                             <div class="card-title">
+                                                <h6 class="title">Store Statistics</h6>
+                                             </div>
+                                          </div>
+                                          <ul class="nk-store-statistics">
+                                             <li class="item">
+                                                <div class="info">
+                                                   <div class="title">Sales</div>
+                                                   <div class="count">{{total_sales}}</div>
+                                                </div>
+                                                <em class="icon bg-primary-dim ni ni-bag"></em>
+                                             </li>
+                                             <li class="item">
+                                                <div class="info">
+                                                   <div class="title">Customers</div>
+                                                   <div class="count">{{customer_count}}</div>
+                                                </div>
+                                                <em class="icon bg-info-dim ni ni-users"></em>
+                                             </li>
+                                             <li class="item">
+                                                <div class="info">
+                                                   <div class="title">Products</div>
+                                                   <div class="count">{{products}}</div>
+                                                </div>
+                                                <em class="icon bg-pink-dim ni ni-box"></em>
+                                             </li>
+                                             <li class="item">
+                                                <div class="info">
+                                                   <div class="title">Categories</div>
+                                                   <div class="count">5</div>
+                                                </div>
+                                                <em class="icon bg-purple-dim ni ni-server"></em>
+                                             </li>
+                                          </ul>
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 <div class="col-xxl-8">
+                                    <div class="card card-bordered card-full">
+                                       <div class="card-inner">
+                                          <div class="card-title-group">
+                                             <div class="card-title">
+                                                <h6 class="title"><span class="me-2">Transaction</span> <a href="#" class="link d-none d-sm-inline"></a></h6>
+                                             </div>
+                                             <div class="card-tools">
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="card-inner p-0 border-top">
+                                          <div class="nk-tb-list nk-tb-orders">
+                                             <div class="nk-tb-item nk-tb-head">
+                                                <div class="nk-tb-col"><span>Invoice No</span></div>
+                                                <div class="nk-tb-col tb-col-sm"><span>Customer</span></div>
+                                                <div class="nk-tb-col tb-col-md"><span>Date</span></div>
+                                                <div class="nk-tb-col tb-col-lg"><span>Ref</span></div>
+                                                <div class="nk-tb-col"><span>Amount</span></div>
+                                                <div class="nk-tb-col"><span class="d-none d-sm-inline">Status</span></div>
+                                                <div class="nk-tb-col"><span>&nbsp;</span></div>
+                                             </div>
+                                              {% for customer in customers %}
+                                             <div class="nk-tb-item">
+                                                <div class="nk-tb-col"><span class="tb-lead"><a href="#">INVX{{customer.cust_id}}PY</a></span></div>
+                                                <div class="nk-tb-col tb-col-sm">
+                                                   <div class="user-card">
+                                                      <div class="user-avatar user-avatar-sm bg-purple"><span>{{ customer.name|slice:":2" }}</span></div>
+                                                      <div class="user-name"><span class="tb-lead">{{ customer.name }}</span></div>
+                                                   </div>
+                                                </div>
+                                                {% with bill=bill_map|get:customer.cust_id %}
+                                                <div class="nk-tb-col tb-col-md"><span class="tb-sub">{{ bill.created_at}}</span></div>
+                                                <div class="nk-tb-col tb-col-lg"><span class="tb-sub text-primary">BIL{{ bill.id}}VY</span></div>
+                                                <div class="nk-tb-col"><span class="tb-sub tb-amount">Rs.{{ bill.total_amount}}<span></span></span></div>
+                                                <div class="nk-tb-col"><span class="badge badge-dot badge-dot-xs text-success">Paid</span></div>
+                                                {% endwith %}
+                                                <div class="nk-tb-col nk-tb-col-action">
+                                                   <div class="dropdown">
+                                                      <a class="text-soft dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                      <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                                                         <ul class="link-list-plain">
+                                                            <li><a href="#">View</a></li>
+                                                            <li><a href="#">Invoice</a></li>
+                                                            <li><a href="#">Print</a></li>
+                                                         </ul>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             {% empty %}
+                            <div class="nk-tb-item">
+                                <div class="nk-tb-col"><span>No customers found.</span></div>
+                            </div>
+                            {% endfor %}
+
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="card-inner-sm border-top text-center d-sm-none"><a href="#" class="btn btn-link btn-block">See History</a></div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+{% endblock %}

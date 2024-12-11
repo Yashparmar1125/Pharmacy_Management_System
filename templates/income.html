@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+<div class="nk-content-inner">
+                        <div class="nk-content-body">
+                           <div class="nk-block-head nk-block-head-sm">
+                              {% include 'includes/message.html' %}
+                              <div class="nk-block-between">
+                                 <div class="nk-block-head-content">
+                                    <h3 class="nk-block-title page-title">Income</h3>
+                                 </div>
+
+                                 <div class="nk-block-head-content">
+                                    <div class="toggle-wrap nk-block-tools-toggle">
+                                       <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
+                                       <div class="toggle-expand-content" data-content="pageMenu">
+                                          <ul class="nk-block-tools g-3">
+                                             <li>
+                                                <div class="drodown">
+                                                   <a href="#" class="dropdown-toggle btn btn-white btn-dim btn-outline-light" data-bs-toggle="dropdown"><em class="d-none d-sm-inline icon ni ni-filter-alt"></em><span><span class="d-none d-md-inline"></span>Filtered By</span></a>
+                                                   <div class="dropdown-menu dropdown-menu-end">
+                                                      <ul class="link-list-opt no-bdr">
+                                                         <li><a href="#"><span>Last 7 Days</span></a></li>
+                                                         <li><a href="#"><span>Last 30 Days</span></a></li>
+                                                         <li><a href="#"><span>Last 6 Month</span></a></li>
+                                                      </ul>
+                                                   </div>
+                                                </div>
+                                             </li>
+                                             <li class="nk-block-tools-opt">
+                                    <a href="#addIncome" data-bs-toggle="modal" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>Add Income</span></a>
+                                </li>
+                                          </ul>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="nk-block">
+                              <div class="row g-gs">
+                                 <div class="col-xxl-3 col-sm-6">
+                                    <div class="card">
+                                       <div class="nk-ecwg nk-ecwg6">
+                                          <div class="card-inner">
+                                             <div class="card-title-group">
+                                                <div class="card-title">
+                                                   <h6 class="title">Today's Income</h6>
+                                                </div>
+                                             </div>
+                                             <div class="data">
+                                                <div class="data-group">
+                                                   <div class="amount">Rs.{{today_income}}</div>
+                                                   <div class="nk-ecwg6-ck">
+                                                      <canvas class="ecommerce-line-chart-s3" id="toDay"></canvas>
+                                                   </div>
+                                                </div>
+                                                <div class="info">
+    {% if today_percentage_change > 0 %}
+        <span class="change up text-success"><em class="icon ni ni-arrow-long-up"></em>{{ today_percentage_change|floatformat:2 }}%</span>
+    {% elif today_percentage_change < 0 %}
+        <span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>{{ today_percentage_change|floatformat:2 }}%</span>
+    {% else %}
+        <span class="change up text-success"><em class="icon ni ni-arrow-long-up"></em>4.56</span>
+    {% endif %}
+    <span> vs. Yesterday</span>
+</div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xxl-3 col-sm-6">
+                                    <div class="card">
+                                       <div class="nk-ecwg nk-ecwg6">
+                                          <div class="card-inner">
+                                             <div class="card-title-group">
+                                                <div class="card-title">
+                                                   <h6 class="title">This Week Income</h6>
+                                                </div>
+                                             </div>
+                                             <div class="data">
+                                                <div class="data-group">
+                                                   <div class="amount">Rs.{{weekly_income}}</div>
+                                                   <div class="nk-ecwg6-ck">
+                                                      <canvas class="ecommerce-line-chart-s3" id="thisWeek"></canvas>
+                                                   </div>
+                                                </div>
+                                                <div class="info">
+    {% if weekly_percentage_change > 0 %}
+        <span class="change up text-success"><em class="icon ni ni-arrow-long-up"></em>{{ weekly_percentage_change|floatformat:2 }}%</span>
+    {% elif weekly_percentage_change < 0 %}
+        <span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>{{ weekly_percentage_change|floatformat:2 }}%</span>
+    {% else %}
+        <span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>2.16</span>
+    {% endif %}
+    <span> vs. last week</span>
+</div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xxl-3 col-sm-6">
+                                    <div class="card">
+                                       <div class="nk-ecwg nk-ecwg6">
+                                          <div class="card-inner">
+                                             <div class="card-title-group">
+                                                <div class="card-title ">
+                                                   <h6 class="title">This Month Income</h6>
+                                                </div>
+                                             </div>
+                                             <div class="data">
+                                                <div class="data-group">
+                                                   <div class="amount">Rs.{{last_month_income}}</div>
+                                                   <div class="nk-ecwg6-ck">
+                                                      <canvas class="ecommerce-line-chart-s3" id="thisMonth"></canvas>
+                                                   </div>
+                                                </div>
+                                                <div class="info">
+    {% if monthly_percentage_change > 0 %}
+        <span class="change up text-success"><em class="icon ni ni-arrow-long-up"></em>{{ monthly_percentage_change|floatformat:2 }}%</span>
+    {% elif monthly_percentage_change < 0 %}
+        <span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>{{ monthly_percentage_change|floatformat:2 }}%</span>
+    {% else %}
+        <span class="change up text-success"><em class="icon ni ni-arrow-long-up"></em>1.16</span>
+    {% endif %}
+    <span> vs. last month</span>
+</div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-xxl-3 col-sm-6">
+                                    <div class="card">
+                                       <div class="nk-ecwg nk-ecwg6">
+                                          <div class="card-inner">
+                                             <div class="card-title-group">
+                                                <div class="card-title">
+                                                   <h6 class="title">This Year Income</h6>
+                                                </div>
+                                             </div>
+                                             <div class="data">
+                                                <div class="data-group">
+                                                   <div class="amount">Rs.{{total_income}}</div>
+                                                   <div class="nk-ecwg6-ck">
+                                                      <canvas class="ecommerce-line-chart-s3" id="thisYear"></canvas>
+                                                   </div>
+                                                </div>
+                                                <div class="info"><span class="change up text-primary"><em class="icon ni ni-arrow-long-up"></em>1.34%</span><span> vs. last Year</span></div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="nk-block">
+    <div class="card card-bordered card-stretch">
+        <div class="card-inner-group">
+            <div class="card-inner position-relative card-tools-toggle">
+                <div class="card-title-group">
+                    <div class="card-title">
+                        <h5 class="title">Income List</h5>
+                    </div>
+                    <div class="card-tools me-n1">
+                        <ul class="btn-toolbar gx-1">
+                            <li><a href="#" class="btn btn-icon search-toggle toggle-search" data-target="search"><em class="icon ni ni-search"></em></a></li>
+                            <li class="btn-toolbar-sep"></li>
+                            <li>
+                                <div class="dropdown">
+                                    <a href="#" class="btn btn-trigger btn-icon dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-setting"></em></a>
+                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                                        <ul class="link-check">
+                                            <li><span>Show</span></li>
+                                            <li class="active"><a href="#">10</a></li>
+                                            <li><a href="#">20</a></li>
+                                            <li><a href="#">50</a></li>
+                                        </ul>
+                                        <ul class="link-check">
+                                            <li><span>Order</span></li>
+                                            <li class="active"><a href="#">DESC</a></li>
+                                            <li><a href="#">ASC</a></li>
+                                        </ul>
+                                        <ul class="link-check">
+                                            <li><span>Density</span></li>
+                                            <li class="active"><a href="#">Regular</a></li>
+                                            <li><a href="#">Compact</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-inner p-0">
+                    <div class="nk-tb-list nk-tb-ulist is-compact">
+                        <div class="nk-tb-item nk-tb-head bg-primary-dim">
+                            <div class="nk-tb-col nk-tb-col-check">
+
+                            </div>
+                            <div class="nk-tb-col"><span class="sub-text">Category</span></div>
+                            <div class="nk-tb-col tb-col-mb"><span class="sub-text">Invoice ID</span></div>
+                            <div class="nk-tb-col tb-col-lg"><span class="sub-text">Date</span></div>
+                            <div class="nk-tb-col tb-col-md"><span class="sub-text">Income Head</span></div>
+                            <div class="nk-tb-col"><span class="sub-text">Amount</span></div>
+                           <div class="nk-tb-col" hidden>
+                                <form action="#" method="POST" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this income?');" hidden>Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% for income in incomes %}
+                        <div class="nk-tb-item">
+                            <div class="nk-tb-col nk-tb-col-check">
+
+                            </div>
+                            <div class="nk-tb-col"><span>{{ income.income_type }}</span></div>
+                            <div class="nk-tb-col tb-col-mb"><span class="fw-medium">{{ income.income_id }}</span></div>
+                            <div class="nk-tb-col tb-col-lg"><span>{{ income.created_at|date:"d M Y" }}</span></div>
+                            <div class="nk-tb-col tb-col-md"><span>{{ income.description }}</span></div>
+                            <div class="nk-tb-col"><span class="tb-amount">Rs.{{ income.income_amount }}</span></div>
+                           <div class="nk-tb-col">
+                                <form action="{% url 'delete_income' income.income_id %}" method="POST" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this income?');">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="nk-tb-item">
+                            <div class="nk-tb-col"><span>No income records found.</span></div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-inner">
+                    <!-- Pagination and other controls here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                           <div class="modal fade" id="addIncome" tabindex="-1" aria-labelledby="addIncomeLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addIncomeLabel">Add Income</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'addincome' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="income_type" class="form-label">Income Type</label>
+                        <select class="form-select" id="income_type" name="income_type" required>
+                            <option value="" disabled selected>Select Income Type</option>
+                            <option value="Parking Rent">Parking Rent</option>
+                            <option value="Canteen Charges">Canteen Charges</option>
+                            <option value="investment">Investment</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="income_amount" class="form-label">Amount</label>
+                        <input type="number" class="form-control" id="income_amount" name="income_amount" step="0.01" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Income</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+                        </div>
+                     </div>
+                  </div>
+{% endblock %}

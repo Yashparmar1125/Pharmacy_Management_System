@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="nk-content-inner">
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Add Doctor</h3>
+                    <div class="nk-block-des text-soft">
+                        <p>You can add a doctor by filling these fields.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nk-block">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <form method="post" action="{% url 'adddoctor' %}">
+                        {% csrf_token %}
+                        {% include 'includes/message.html' %}
+                        <div class="row gy-4">
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="specialization">Specialization</label>
+                                    <input type="text" class="form-control" id="specialization" name="specialization" placeholder="Specialization" required>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="phone">Phone</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Add Doctor</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

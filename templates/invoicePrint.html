@@ -1,0 +1,80 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+   <head>
+      <link rel="shortcut icon" href="{% static 'images/favicon/favicon-96x96.png' %}">
+      <title>Invoice Print | PharmEasy</title>
+      <link rel="stylesheet" href="{% static 'assets/css/dashlitee5ca.css' %}">
+      <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/themee5ca.css' %}">
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91615293-4"></script><script>window.dataLayer = window.dataLayer || [];function gtag() {dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-91615293-4');</script>
+   </head>
+   <body class="bg-white" onload="printPromot()">
+      <div class="nk-block">
+          {% load custom_filters %}
+                              <div class="invoice">
+                                 <div class="invoice-action"><a class="btn btn-icon btn-lg btn-white btn-dim btn-outline-primary" href="invoice-print.html" target="_blank"><em class="icon ni ni-printer-fill"></em></a></div>
+                                 <div class="invoice-wrap">
+                                    <div class="invoice-brand text-center"><img src="{% static 'assets/images/logo.png' %}" srcset="/demo7/images/logo-dark2x.png 2x" alt=""></div>
+                                    <div class="invoice-head">
+                                       <div class="invoice-contact">
+                                          <span class="overline-title">Invoice To</span>
+                                          <div class="invoice-contact-info">
+                                             <h4 class="title">{{customer.name}}</h4>
+                                             <ul class="list-plain">
+                                                <li><em class="icon ni ni-map-pin-fill"></em><span>{{customer.address}}</span></li>
+                                                <li><em class="icon ni ni-call-fill"></em><span>{{customer.phone_no}}</span></li>
+                                             </ul>
+                                          </div>
+                                       </div>
+                                       <div class="invoice-desc">
+                                          <h3 class="title">Invoice</h3>
+                                          <ul class="list-plain">
+                                             <li class="invoice-id"><span>Invoice ID</span>:<span>INVX{{ bill.id }}PY</span></li>
+                                             <li class="invoice-date"><span>Date</span>:<span>{{bill.created_at|date:"Y-m-d"}}</span></li>
+                                          </ul>
+                                       </div>
+                                    </div>
+                                    <div class="invoice-bills">
+                                       <div class="table-responsive">
+                                          <table class="table table-striped">
+                                             <thead>
+                                                <tr>
+                                                   <th class="w-150px">Medicine ID</th>
+                                                   <th class="w-60">Name</th>
+                                                   <th>Price</th>
+                                                   <th>Qty</th>
+                                                   <th>Amount</th>
+                                                </tr>
+                                             </thead>
+                                             <tbody>
+                                             {% for item in items %}
+                                                <tr>
+                                                   <td>{{item.med_id.med_id}}</td>
+                                                   <td>{{item.med_id.name}}</td>
+                                                   <td>{{item.med_id.price}}</td>
+                                                   <td>{{item.quantity}}</td>
+                                                   <td>{{ item.med_id.price|times:item.quantity}}</td>
+                                                </tr>
+                                             {% endfor %}
+                                             </tbody>
+                                             <tfoot>
+                                                <tr>
+                                                   <td colspan="2"></td>
+                                                   <td colspan="2">Grand Total</td>
+                                                   <td>Rs.{{bill.total_amount}}</td>
+                                                </tr>
+                                             </tfoot>
+                                          </table>
+                                          <div class="nk-notes ff-italic fs-12px text-soft"> Invoice was created on a computer and is valid without the signature and seal. </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+      <script>function printPromot() {window.print();}</script>
+   </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx" class="js">
+   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+   <head>
+      <meta charset="utf-8">
+      <meta name="author" content="Softnio">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+      <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.ico' %}">
+      <title>Dashboard - PharmEasy</title>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <link rel="stylesheet" href="{% static 'assets/css/dashlitee5ca.css' %}">
+      <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/themee5ca.css' %}">
+
+      <!-- Include jQuery -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+      <!-- Your custom script -->
+      <script>
+         $(document).ready(function() {
+            // Ensure the custom script is executed after jQuery is ready
+            $.getScript("{% static 'assets/js/charts/pharmacy-reporte5ca.js' %}");
+         });
+      </script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91615293-4"></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag() {
+            dataLayer.push(arguments);
+         }
+         gtag('js', new Date());
+         gtag('config', 'UA-91615293-4');
+      </script>
+   </head>
+   <body class="nk-body ui-rounder npc-default has-sidebar">
+      <div class="nk-app-root">
+         {% include 'includes/sidebar.html' %}
+         <div class="nk-main">
+            <div class="nk-wrap">
+               {% include 'includes/header.html' %}
+               <div class="nk-content">
+                  <div class="container-fluid">
+                     {% block content %}
+                     {% endblock %}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <script src="{% static 'assets/js/bundlee5ca.js' %}"></script>
+      <script src="{% static 'assets/js/scriptse5ca.js' %}"></script>
+      <script src="{% static 'assets/js/demo-settingse5ca.js' %}"></script>
+      <script src="{% static 'assets/js/example-charte5ca.js' %}"></script>
+      <script src="{% static 'assets/js/charts/gd-pharmacye5ca.js' %}"></script>
+
+   </body>
+</html>

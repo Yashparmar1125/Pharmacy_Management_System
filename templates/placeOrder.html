@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="nk-content-inner">
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Place A Order</h3>
+                    <div class="nk-block-des text-soft">
+                        <p>You can place a order of medicines here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nk-block">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <form method="post" action="{% url 'orderplaced' %}">
+                        {% csrf_token %}
+                        {% include 'includes/message.html' %}
+                        <div class="row gy-4">
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="name">Medicine_ID</label>
+                                    <input type="text" class="form-control" id="name" name="med_id" value="{{medicine_id}}" required>
+                                </div>
+                            </div>
+                          <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Manufacturer</label>
+                                    <div class="form-control-wrap">
+                                        <select class="form-select js-select2" name="manufacturer" required>
+                                          <option value="">Select</option>
+                                           {% for manufacturer in manufacturer %}
+                                               <option value="{{ manufacturer.manufacturer_id }}">{{ manufacturer.name }}</option>
+                                           {% endfor %}
+                                       </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="phone">Quantity</label>
+                                    <input type="text" class="form-control" id="phone" name="quantity" placeholder="Quantity" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Place Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
