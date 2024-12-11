@@ -79,6 +79,37 @@ To run the server locally, use the following command:
 
 python manage.py runserver
 
+---
+## Contributing
+We welcome contributions to enhance the SCMS! Follow these steps to contribute:
+
+1. Fork the repository.
+2. Create a new feature branch:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. Push the branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a Pull Request.
+
+---
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Contact
+For any queries or support, feel free to reach out:
+- **Author**: Yash Parmar
+- **GitHub**: [https://github.com/Yashparmar1125](https://github.com/Yashparmar1125)
+- **Email**: [yashparmar11y@gmail.com](mailto:yashparmar11y@gmail.com)
+
 
 
 
